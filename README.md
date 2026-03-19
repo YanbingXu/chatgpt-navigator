@@ -2,7 +2,7 @@
 
 ![ChatGPT Navigator](public/icons/icon-128.png)
 
-Supercharge your ChatGPT experience with timeline navigation and session folder management. Inspired by Gemini Voyager, built for ChatGPT.
+Supercharge your ChatGPT experience with timeline navigation and session folder management. Inspired by Gemini Voyager(https://github.com/Nagi-ovo/gemini-voyager), built for ChatGPT.
 
 ## Features
 
