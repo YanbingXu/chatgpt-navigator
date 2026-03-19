@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "bump": "node scripts/bump.js"
   },
   "dependencies": {
     "react": "^19.1.0",
