@@ -1,14 +1,23 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Navigator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Supercharge your ChatGPT experience with timeline navigation and session folder management.",
-  "permissions": ["storage", "activeTab"],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
   "content_scripts": [
     {
-      "matches": ["*://chatgpt.com/*"],
-      "js": ["src/pages/content/index.tsx"],
-      "css": ["contentStyle.css"],
+      "matches": [
+        "*://chatgpt.com/*"
+      ],
+      "js": [
+        "src/pages/content/index.tsx"
+      ],
+      "css": [
+        "contentStyle.css"
+      ],
       "run_at": "document_idle"
     }
   ],

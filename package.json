@@ -1,6 +1,6 @@
 {
   "name": "chatgpt-navigator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Supercharge your ChatGPT experience with timeline navigation and session folder management.",
   "type": "module",
   "scripts": {
