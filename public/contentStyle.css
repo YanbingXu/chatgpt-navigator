@@ -1,0 +1,489 @@
+/* ================================================================
+   ChatGPT Navigator — Injected Content Styles
+   All classes prefixed with `cn-` to avoid collision with ChatGPT's CSS.
+   ================================================================ */
+
+/* ─── Timeline Bar (right-side navigation) ────────────────────── */
+
+.cn-timeline-bar {
+  position: fixed;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 4px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  max-height: 60vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cn-timeline-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.cn-timeline-bar:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .cn-timeline-bar {
+    background: rgba(32, 33, 36, 0.9);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+  .cn-timeline-bar:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Also detect ChatGPT's own dark class */
+html.dark .cn-timeline-bar,
+body.dark .cn-timeline-bar {
+  background: rgba(32, 33, 36, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Timeline Dots ─────────────────────────────────────────── */
+
+.cn-timeline-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.cn-timeline-dot:hover {
+  border-color: #10a37f;
+  background: rgba(16, 163, 127, 0.1);
+  transform: scale(1.2);
+}
+
+.cn-timeline-dot--active {
+  border-color: #10a37f;
+  background: #10a37f;
+}
+
+.cn-timeline-dot--active .cn-timeline-dot-label {
+  color: #fff;
+}
+
+.cn-timeline-dot-label {
+  font-size: 8px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Dark mode dot styling */
+@media (prefers-color-scheme: dark) {
+  .cn-timeline-dot {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .cn-timeline-dot-label {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+html.dark .cn-timeline-dot,
+body.dark .cn-timeline-dot {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+html.dark .cn-timeline-dot-label,
+body.dark .cn-timeline-dot-label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── Timeline Tooltip ──────────────────────────────────────── */
+
+.cn-timeline-tooltip {
+  position: fixed;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 6px 10px;
+  border-radius: 8px;
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) translateX(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.cn-timeline-tooltip--visible {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ─── Folder Container ──────────────────────────────────────── */
+
+.cn-folder-container {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-family: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cn-folder-container {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+html.dark .cn-folder-container,
+body.dark .cn-folder-container {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.cn-folder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.cn-folder-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: inherit;
+  letter-spacing: 0.3px;
+}
+
+.cn-folder-add-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.cn-folder-add-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  .cn-folder-add-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+html.dark .cn-folder-add-btn:hover,
+body.dark .cn-folder-add-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Folder List ───────────────────────────────────────────── */
+
+.cn-folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cn-folder-empty,
+.cn-folder-empty-conv {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  padding: 6px 8px;
+  text-align: center;
+  font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cn-folder-empty,
+  .cn-folder-empty-conv {
+    color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+html.dark .cn-folder-empty,
+html.dark .cn-folder-empty-conv,
+body.dark .cn-folder-empty,
+body.dark .cn-folder-empty-conv {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Folder Item ───────────────────────────────────────────── */
+
+.cn-folder-item-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.cn-folder-item-header:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  .cn-folder-item-header:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+html.dark .cn-folder-item-header:hover,
+body.dark .cn-folder-item-header:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cn-folder-expand-icon {
+  font-size: 12px;
+  width: 14px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cn-folder-icon {
+  font-size: 14px;
+}
+
+.cn-folder-name {
+  font-size: 13px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cn-folder-delete-btn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.12s ease, background 0.12s ease;
+}
+
+.cn-folder-item-header:hover .cn-folder-delete-btn {
+  opacity: 0.6;
+}
+
+.cn-folder-delete-btn:hover {
+  opacity: 1 !important;
+  background: rgba(255, 0, 0, 0.08);
+  color: #e53e3e;
+}
+
+/* ─── Folder Item Actions (hover-visible) ───────────────────── */
+
+.cn-folder-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.cn-folder-item-header:hover .cn-folder-item-actions {
+  opacity: 1;
+}
+
+.cn-folder-action-btn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s ease;
+  padding: 0;
+}
+
+.cn-folder-action-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.cn-folder-action-btn.cn-folder-delete-btn:hover {
+  background: rgba(255, 0, 0, 0.08);
+  color: #e53e3e;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cn-folder-action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+html.dark .cn-folder-action-btn:hover,
+body.dark .cn-folder-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Folder Conversations ──────────────────────────────────── */
+
+.cn-folder-conversations {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cn-folder-conversation-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.cn-folder-conversation {
+  flex: 1;
+  font-size: 13px;
+  color: inherit;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background 0.12s ease;
+}
+
+.cn-folder-conversation:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.cn-folder-remove-btn {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.12s ease, background 0.12s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.cn-folder-conversation-row:hover .cn-folder-remove-btn {
+  opacity: 0.5;
+}
+
+.cn-folder-remove-btn:hover {
+  opacity: 1 !important;
+  background: rgba(255, 0, 0, 0.08);
+  color: #e53e3e;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cn-folder-conversation:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+html.dark .cn-folder-conversation:hover,
+body.dark .cn-folder-conversation:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Context Menu ──────────────────────────────────────────── */
+
+.cn-folder-context-menu {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 4px 0;
+  min-width: 180px;
+  font-family: inherit;
+}
+
+.cn-folder-context-menu-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  padding: 6px 12px 4px;
+}
+
+.cn-folder-context-menu-item {
+  font-size: 13px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.cn-folder-context-menu-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .cn-folder-context-menu {
+    background: #2d2d2d;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .cn-folder-context-menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+html.dark .cn-folder-context-menu,
+body.dark .cn-folder-context-menu {
+  background: #2d2d2d;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .cn-folder-context-menu-item:hover,
+body.dark .cn-folder-context-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Drag & Drop ───────────────────────────────────────────── */
+
+.cn-folder-drop-active {
+  outline: 2px dashed #10a37f;
+  outline-offset: -2px;
+  background: rgba(16, 163, 127, 0.05) !important;
+}

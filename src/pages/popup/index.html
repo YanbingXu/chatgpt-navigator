@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatGPT Navigator</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      width: 320px;
+      min-height: 200px;
+      padding: 16px;
+      background: #fff;
+      color: #1a1a1a;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #1e1e1e; color: #e0e0e0; }
+    }
+    h1 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+    .section { margin-bottom: 16px; }
+    .section-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 8px; }
+    .option { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+    .option label { font-size: 13px; }
+    .toggle { position: relative; width: 36px; height: 20px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle .slider { position: absolute; cursor: pointer; inset: 0; background: #ccc; border-radius: 20px; transition: 0.2s; }
+    .toggle .slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 2px; bottom: 2px; background: #fff; border-radius: 50%; transition: 0.2s; }
+    .toggle input:checked + .slider { background: #10a37f; }
+    .toggle input:checked + .slider::before { transform: translateX(16px); }
+    .version { font-size: 11px; color: #999; text-align: center; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1>🧭 ChatGPT Navigator</h1>
+
+  <div class="section">
+    <div class="section-title">Timeline</div>
+    <div class="option">
+      <label for="timeline-toggle">Show timeline bar</label>
+      <label class="toggle">
+        <input type="checkbox" id="timeline-toggle" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="option">
+      <label for="scroll-mode">Smooth scroll</label>
+      <label class="toggle">
+        <input type="checkbox" id="scroll-mode" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Folders</div>
+    <div class="option">
+      <label for="folder-toggle">Enable folders</label>
+      <label class="toggle">
+        <input type="checkbox" id="folder-toggle" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="version">v0.1.0</div>
+
+  <script type="module" src="./popup.ts"></script>
+</body>
+</html>
