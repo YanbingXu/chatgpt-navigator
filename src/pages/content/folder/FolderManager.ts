@@ -17,8 +17,6 @@ import type { ConversationReference, Folder, FolderData } from '@/core/types/com
 const TAG = 'Folder';
 const CLS = 'cn-folder';
 
-const ROOT_CONVERSATIONS_ID = '__root__';
-
 function generateId(): string {
   return `f-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 }

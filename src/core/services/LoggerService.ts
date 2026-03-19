@@ -3,7 +3,6 @@
  * No console.log in production; use this service instead.
  */
 
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 const LOG_PREFIX = '[ChatGPT-Nav]';
 

@@ -16,10 +16,6 @@ const USER_TURN_SELECTORS = [
   'article[data-testid^="conversation-turn-"] [data-message-author-role="user"]',
 ];
 
-const ASSISTANT_TURN_SELECTORS = [
-  '[data-message-author-role="assistant"]',
-];
-
 /** CSS class prefix to avoid collisions with ChatGPT's styles */
 const CLS = 'cn-timeline';
 

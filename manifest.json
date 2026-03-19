@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Navigator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Supercharge your ChatGPT experience with timeline navigation and session folder management.",
   "permissions": ["storage", "activeTab"],
   "content_scripts": [
