@@ -257,6 +257,16 @@ export class FolderManager {
       this.addCurrentChatToFolder(folder.id);
     });
 
+    // Rename folder button
+    const renameBtn = document.createElement('button');
+    renameBtn.className = `${CLS}-action-btn`;
+    renameBtn.textContent = '✎';
+    renameBtn.title = 'Rename folder';
+    renameBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.renameFolder(folder.id);
+    });
+
     // Delete folder button
     const deleteBtn = document.createElement('button');
     deleteBtn.className = `${CLS}-action-btn ${CLS}-delete-btn`;
@@ -268,6 +278,7 @@ export class FolderManager {
     });
 
     actions.appendChild(addCurrentBtn);
+    actions.appendChild(renameBtn);
     actions.appendChild(deleteBtn);
 
     headerRow.appendChild(expandIcon);
