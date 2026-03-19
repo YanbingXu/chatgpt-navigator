@@ -1,115 +1,113 @@
-/* ================================================================
-   ChatGPT Navigator — Injected Content Styles
-   All classes prefixed with `cn-` to avoid collision with ChatGPT's CSS.
-   ================================================================ */
-
 /* ─── Timeline Bar (right-side navigation) ────────────────────── */
+
+:root {
+  --nav-dot-primary: #10a37f;
+  --nav-dot-size: 10px;
+  --nav-hit-size: 28px;
+  --nav-active-ring: 4px;
+  --nav-bar-pad-y: 16px;
+}
 
 .cn-timeline-bar {
   position: fixed;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 16px;
+  top: 60px;
+  height: calc(100vh - 100px);
+  width: 32px;
   z-index: 10000;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 4px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
-  max-height: 60vh;
-  overflow-y: auto;
-  scrollbar-width: none;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  justify-content: center;
+  pointer-events: none; /* Let clicks pass through empty space */
 }
 
-.cn-timeline-bar::-webkit-scrollbar {
-  display: none;
+/* Glassmorphism track pill (only visible exactly behind the dots, subtle on hover) */
+.cn-timeline-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  border-radius: 12px;
+  background-color: transparent;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  pointer-events: auto; /* Catch hover */
 }
 
-.cn-timeline-bar:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+.cn-timeline-bar:hover::before {
+  background-color: rgba(248, 250, 252, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
-  .cn-timeline-bar {
-    background: rgba(32, 33, 36, 0.9);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.06);
-  }
-  .cn-timeline-bar:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  .cn-timeline-bar:hover::before {
+    background-color: rgba(2, 6, 23, 0.5);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
   }
 }
 
-/* Also detect ChatGPT's own dark class */
-html.dark .cn-timeline-bar,
-body.dark .cn-timeline-bar {
-  background: rgba(32, 33, 36, 0.9);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.06);
+html.dark .cn-timeline-bar:hover::before,
+body.dark .cn-timeline-bar:hover::before {
+  background-color: rgba(2, 6, 23, 0.5);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* ─── Timeline Dots ─────────────────────────────────────────── */
 
 .cn-timeline-dot {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.15);
+  position: absolute;
+  left: 50%;
+  /* Calculate vertical pos using --n (0 to 1) */
+  top: calc(var(--nav-bar-pad-y) + (100% - 2 * var(--nav-bar-pad-y)) * var(--n, 0));
+  transform: translate(-50%, -50%);
+  width: var(--nav-hit-size);
+  height: var(--nav-hit-size);
   background: transparent;
+  border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 0;
-  transition: all 0.15s ease;
-  position: relative;
+  pointer-events: auto; 
 }
 
-.cn-timeline-dot:hover {
-  border-color: #10a37f;
-  background: rgba(16, 163, 127, 0.1);
-  transform: scale(1.2);
+.cn-timeline-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--nav-dot-size);
+  height: var(--nav-dot-size);
+  border-radius: 50%;
+  background-color: #94a3b8;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
-.cn-timeline-dot--active {
-  border-color: #10a37f;
-  background: #10a37f;
+/* Restored solid dark mode dots to match Voyager robustness */
+html.dark .cn-timeline-dot:not(.cn-timeline-dot--active)::after,
+body.dark .cn-timeline-dot:not(.cn-timeline-dot--active)::after {
+  background-color: #475569;
+  border: none;
 }
 
-.cn-timeline-dot--active .cn-timeline-dot-label {
-  color: #fff;
+.cn-timeline-dot:hover::after {
+  transform: translate(-50%, -50%) scale(1.3);
+  background-color: var(--nav-dot-primary);
+  border-color: transparent;
+}
+
+.cn-timeline-dot--active::after {
+  background-color: var(--nav-dot-primary) !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 var(--nav-active-ring) rgba(16, 163, 127, 0.25);
+  transform: translate(-50%, -50%) scale(1.6);
 }
 
 .cn-timeline-dot-label {
-  font-size: 8px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
-  line-height: 1;
-  pointer-events: none;
-}
-
-/* Dark mode dot styling */
-@media (prefers-color-scheme: dark) {
-  .cn-timeline-dot {
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-  .cn-timeline-dot-label {
-    color: rgba(255, 255, 255, 0.5);
-  }
-}
-
-html.dark .cn-timeline-dot,
-body.dark .cn-timeline-dot {
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-html.dark .cn-timeline-dot-label,
-body.dark .cn-timeline-dot-label {
-  color: rgba(255, 255, 255, 0.5);
+  display: none !important; 
 }
 
 /* ─── Timeline Tooltip ──────────────────────────────────────── */
@@ -117,25 +115,49 @@ body.dark .cn-timeline-dot-label {
 .cn-timeline-tooltip {
   position: fixed;
   z-index: 10001;
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  font-size: 12px;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  font-family: inherit;
+  font-size: 13px;
   line-height: 1.4;
-  padding: 6px 10px;
-  border-radius: 8px;
-  max-width: 260px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 10px 14px;
+  border-radius: 12px;
+  max-width: 280px;
+  word-break: break-word;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(-50%) translateX(4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transform: translateY(-50%) translateX(8px);
+  transition: opacity 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .cn-timeline-tooltip--visible {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
+}
+
+/* Tooltip dark mode */
+@media (prefers-color-scheme: dark) {
+  .cn-timeline-tooltip {
+    background: #0b1220;
+    color: #e2e8f0;
+    border-color: #1f2937;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
+}
+
+html.dark .cn-timeline-tooltip,
+body.dark .cn-timeline-tooltip {
+  background: #0b1220;
+  color: #e2e8f0;
+  border-color: #1f2937;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 /* ─── Folder Container ──────────────────────────────────────── */

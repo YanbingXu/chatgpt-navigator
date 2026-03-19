@@ -273,18 +273,17 @@ export class TimelineManager {
     // Clear existing dots
     this.timelineBar.innerHTML = '';
 
-    this.markers.forEach((marker) => {
+    const count = this.markers.length;
+    this.markers.forEach((marker, index) => {
       const dot = document.createElement('button');
       dot.className = `${CLS}-dot`;
       dot.dataset.markerId = marker.id;
       dot.setAttribute('aria-label', `Jump to turn ${marker.index + 1}: ${marker.summary}`);
       dot.title = marker.summary;
 
-      // Add turn number label
-      const label = document.createElement('span');
-      label.className = `${CLS}-dot-label`;
-      label.textContent = `${marker.index + 1}`;
-      dot.appendChild(label);
+      // Calculate proportional position: 0 to 1
+      const n = count > 1 ? index / (count - 1) : 0.5;
+      dot.style.setProperty('--n', n.toString());
 
       this.timelineBar!.appendChild(dot);
     });
